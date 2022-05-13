@@ -1,0 +1,294 @@
+1.	Sum and average
+include io.h
+data segment
+crequ 0ah
+lfequ 0dh
+m1 dbcr,lf,"enter m1",0
+m2 dbcr,lf,"enter m2",0
+m3 dbcr,lf,"sum ",0
+m4 dbcr,lf,"averg",0
+a dw ?
+b dw ?
+avg dw 40 dup(?)
+sum dw 10 dup(?)
+value dw 10 dup(?)
+data ends
+
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+
+output m1
+inputs value,16
+atoi value
+mov a,ax
+
+output m2
+inputs value,16
+atoi value
+mov b,ax
+
+add ax,a
+itoasum,ax
+output m3
+output sum
+
+output m4
+mov bl,2
+div bl
+itoaavg,al
+output avg
+mov ah,4ch
+int 21h
+
+code ENDS
+END start
+2.	Area of rectangle
+include io.h
+data segment
+crequ 0ah
+lfequ 0dh
+m1 dbcr,lf,"enter l",0
+m2 dbcr,lf,"enter b",0
+m3 dbcr,lf,"area ",0
+
+a dw ?
+b dw ?
+area dw 40 dup(?)
+
+value dw 10 dup(?)
+data ends
+
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+
+output m1
+inputs value,16
+atoi value
+mov a,ax
+
+output m2
+inputs value,16
+atoi value
+mov b,ax
+
+mov ax,a
+mov bx,b
+mul bx
+
+
+itoaarea,ax
+output m3
+output area
+
+
+mov ah,4ch
+int 21h
+
+code ENDS
+END start
+3.	Greatest of two numbers
+include io.h
+data segment
+crequ 0ah
+lfequ 0dh
+m1 dbcr,lf,"enter fir",0
+m2 dbcr,lf,"enter sec",0
+m3 dbcr,lf,"greatest ",0
+
+a dw ?
+b dw ?
+num dw 40 dup(?)
+value dw 10 dup(?)
+data ends
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+output m1
+inputs value,16
+atoi value
+mov a,ax
+output m2
+inputs value,16
+atoi value
+mov b,ax
+mov ax,a
+mov bx,b
+cmpax,bx
+jg label1
+output m3
+itoanum,bx
+output num
+jmp quit
+label1:output m3
+itoanum,ax
+output num
+jmp quit
+quit:mov ah,4ch
+int 21h
+code ENDS
+END start
+
+5>check if number is even or odd
+include io.h
+data segment
+crequ 0ah
+lfequ 0dh
+m1 dbcr,lf,"enter number",0
+m2 dbcr,lf,"odd number",0
+m3 dbcr,lf,"even number ",0
+
+a dw ?
+b dw ?
+num dw 40 dup(?)
+
+value dw 10 dup(?)
+data ends
+
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+
+output m1
+inputs value,16
+atoi value
+mov a,ax
+
+mov ax,a
+mov bx,2
+cwd
+div bx
+cmp dx,0
+je labeleven
+output m2
+jmp quit
+labeleven:output m3
+jmp quit
+quit:mov ah,4ch
+int 21h
+code ENDS
+END start
+
+6.positive or negative
+include io.h
+data segment
+crequ 0ah
+lfequ 0dh
+m1 dbcr,lf,"enter number",0
+m2 dbcr,lf,"positive number",0
+m3 dbcr,lf,"negative number ",0
+a dw ?
+b dw ?
+num dw 40 dup(?)
+value dw 10 dup(?)
+data ends
+
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+output m1
+inputs value,16
+atoi value
+mov a,ax
+mov ax,a
+cmp ax,0
+jge label1
+output m3
+jmp quit
+label1:output m2
+jmp quit
+quit:mov ah,4ch
+int 21h
+code ENDS
+END start
+
+
+check if number divisible by 5
+include io.h
+data segment
+crequ 0ah
+lfequ 0dh
+msg1 db 10,13,"enter number ",0
+msg2 db 10,13,"number is not divisible by 5",0
+msg3 db 10,13,"number is  divisible by 5",0
+a dw ?
+value dw 10 dup(?)
+result dw 10 dup(?)
+data ends
+
+code segment
+assume cs:code ,ds:data
+start:
+mov ax,data
+mov ds,ax
+output msg1
+inputs value,16
+atoi value
+mov a,ax
+mov bl,5
+div bl
+cmp ah,0h
+jnz go
+output msg3
+jmp quit
+go:output msg2
+quit: mov al,00h
+mov ah,4ch
+int 21h
+code ends
+end start
+
+
+check if number is even or odd
+include io.h
+data segment
+crequ 0ah
+lfequ 0dh
+m1 dbcr,lf,"enter number",0
+m2 dbcr,lf,"odd number",0
+m3 dbcr,lf,"even number ",0
+
+a dw ?
+b dw ?
+num dw 40 dup(?)
+
+value dw 10 dup(?)
+data ends
+
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+
+output m1
+inputs value,16
+atoi value
+mov a,ax
+
+mov ax,a
+mov bx,2
+cwd
+div bx
+cmp dx,0
+je labeleven
+output m2
+jmp quit
+labeleven:output m3
+jmp quit
+quit:mov ah,4ch
+int 21h
+code ENDS
+END start
+

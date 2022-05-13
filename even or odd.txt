@@ -1,0 +1,36 @@
+include io.h
+data segment
+cr equ 0ah
+lf equ 0dh
+m1 db cr,lf,&quot;enter number&quot;,0
+m2 db cr,lf,&quot;odd number&quot;,0
+m3 db cr,lf,&quot;even number &quot;,0
+a dw ?
+b dw ?
+num dw 40 dup(?)
+value dw 10 dup(?)
+data ends
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+output m1
+inputs value,16
+atoi value
+mov a,ax
+mov ax,a
+mov bx,2
+cwd
+
+div bx
+cmp dx,0
+je labeleven
+output m2
+jmp quit
+labeleven:output m3
+jmp quit
+quit:mov ah,4ch
+int 21h
+code ENDS
+END start

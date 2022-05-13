@@ -1,0 +1,33 @@
+include io.h
+data segment
+cr equ 0ah
+lf equ 0dh
+m1 db cr,lf,&quot;enter number&quot;,0
+m2 db cr,lf,&quot;positive number&quot;,0
+m3 db cr,lf,&quot;negative number &quot;,0
+a dw ?
+b dw ?
+num dw 40 dup(?)
+value dw 10 dup(?)
+data ends
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+output m1
+inputs value,16
+atoi value
+mov a,ax
+mov ax,a
+cmp ax,0
+jge label1
+output m3
+jmp quit
+label1:output m2
+jmp quit
+
+quit:mov ah,4ch
+int 21h
+code ENDS
+END start

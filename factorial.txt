@@ -1,0 +1,33 @@
+factorial
+
+include io.h
+data segment
+cr equ 0dh
+lf equ 0ah
+msg1 db cr,lf,&quot;enter the number&quot;,0
+n dw ?
+result dw 6 dup(?)
+value dw 40 dup(?)
+f dw ?
+data ends
+code segment
+assume cs:code ,ds:data
+
+start:
+mov ax,data
+mov ds,ax
+output msg1
+inputs value,16
+atoi value
+mov f,ax
+mov cx,f
+mov ax,1
+label1:imul cx
+dec cx
+jnz label1
+itoa result,ax
+output result
+mov ah,4ch
+int 21h
+ code ends 
+end start

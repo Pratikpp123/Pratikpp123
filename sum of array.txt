@@ -1,0 +1,64 @@
+sum_array_elements
+
+include io.h
+data segment
+cr equ 0dh
+lf equ 0ah
+msg1 db cr,lf,&quot;enter number of elements in the array&quot;,0
+msg2 db cr,lf,&quot;enter elements in the array&quot;,0
+msg3 db cr,lf,&quot;the sum is&quot;,0
+msg4 db cr,lf,&quot;the array is&quot;,0
+num dw 40 dup(?)
+n dw ?
+array dw 40 dup(?)
+
+sum dw 40 dup(?)
+data ends
+code segment
+assume cs:code ,ds:data
+start:
+mov ax,data
+mov ds,ax
+output msg1
+inputs num,40
+atoi num
+mov n,ax
+mov dx,n
+lea si,array
+output msg2
+label1: inputs num,40
+atoi num
+mov [si],ax
+add si,2
+dec dx
+cmp dx,0
+jne label1
+mov dx,n
+output msg4
+lea si,array
+label2:
+mov ax,[si]
+itoa sum,ax
+output sum
+add si,2
+
+dec dx
+cmp dx,0
+jne label2
+lea si,array
+mov bx,0
+mov dx,n
+label3:
+mov ax,[si]
+add bx,ax
+add si,2
+dec dx
+cmp dx,0
+jne label3
+output msg3
+itoa sum,bx
+output sum
+mov ah,4ch
+int 21h
+code ends
+end start

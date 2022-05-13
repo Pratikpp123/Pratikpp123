@@ -1,0 +1,38 @@
+Area of rectangle
+include io.h
+data segment
+cr equ 0ah
+lf equ 0dh
+m1 db cr,lf,&quot;enter l&quot;,0
+m2 db cr,lf,&quot;enter b&quot;,0
+m3 db cr,lf,&quot;area &quot;,0
+a dw ?
+b dw ?
+area dw 40 dup(?)
+value dw 10 dup(?)
+data ends
+code segment
+assume cs:code, ds:data
+start:
+mov ax,data
+mov ds,ax
+output m1
+inputs value,16
+atoi value
+mov a,ax
+output m2
+inputs value,16
+atoi value
+mov b,ax
+mov ax,a
+mov bx,b
+mul bx
+
+itoa area,ax
+output m3
+output area
+
+mov ah,4ch
+int 21h
+code ENDS
+END start

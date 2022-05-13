@@ -1,0 +1,63 @@
+
+Largest_element_array
+
+include io.h
+data segment
+cr equ 0dh
+lf equ 0ah
+msg1 db cr,lf,&quot;enter number of elements in the array&quot;,0
+msg2 db cr,lf,&quot;enter elements in the array&quot;,0
+msg3 db cr,lf,&quot;the largest element is&quot;,0
+n dw ?; store length of array
+e dw ? ;store indiviual element
+num dw 40 dup(?)
+array dw 40 dup(?)
+buffer dw 40 dup(?); jus to take user input
+data ends
+
+code segment
+assume cs:code ,ds:data
+start:
+mov ax,data
+mov ds,ax
+output msg1
+inputs num,40
+atoi num
+mov n,ax ;store len in variable n
+mov dx,n ;transfer n to dx,for looping purpose
+lea si,array ;source index points to first location of array
+output msg2
+label1: inputs buffer,40
+atoi buffer
+mov [si],ax ;moves to address pointed by si
+add si,2 ;go to next address
+dec dx ; bcz one element is already been taken
+cmp dx,0 ;check if all elements are taken
+jne label1; loop again to label1 if dx is not zero
+lea si,array ;source index points to first location of array
+mov dx,n ;load len of array in dx
+mov bx,[si];keep bx to store the max number,initially first num is compared,bx will change
+dec dx; bcz one element is taken
+label2:
+add si,2
+mov cx,[si]
+cmp cx,bx
+jg label3
+dec dx
+
+cmp dx,0
+jne label2
+je label4
+label3:
+mov bx,cx
+dec dx
+cmp dx,0
+jne label2
+je label4
+label4: output msg3
+itoa buffer,bx
+output buffer
+mov ah,4ch
+int 21h
+code ends
+end start
